@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Menu, X, Phone, Mail, MapPin, ArrowUp } from 'lucide-react';
 import logo from '../assets/logo_new.jpg'
-// import './LandingPage.css'; // Create this file for any custom CSS if needed
 
 const LandingPage = () => {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -40,7 +39,6 @@ const LandingPage = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-2">
-              {/* <Logo /> */}
               <img src={logo} alt='logo' className="h-12 w-auto object-contain max-w-[150px]"></img>
               <span className="text-2xl font-bold" style={{ color: '#77DC4E' }}>Welin</span>
             </div>
