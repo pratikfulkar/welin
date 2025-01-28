@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import AddUser from './pages/AddUser';
+import PartnerForm from './pages/Partner';
 
 const App = () => {
   return (
@@ -9,6 +10,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/adduser" element={<AddUser />} />
+          <Route path="/partner/aiocd" element={<PartnerForm />}/>
         </Routes>
       </div>
     </Router>
