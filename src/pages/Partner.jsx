@@ -94,7 +94,18 @@ const PartnerForm = () => {
     policyEndDate: getEndDate(getTodayDate()), // Calculate based on today
     maritalStatus: '',
     premiumWithoutGst: 0,
-    premiumWithGst: 0
+    premiumWithGst: 0,
+        // New medical history fields
+        hasHypertension: '',
+        hypertensionYears: '',
+        hasDiabetes: '',
+        diabetesYears: '',
+        hasHeartDisease: '',
+        heartDiseaseYears: '',
+        hasCancer: '',
+        cancerYears: '',
+        hasKidneyDisease: '',
+        kidneyDiseaseYears: ''
   };
 
   const [formData, setFormData] = useState(initialState);
@@ -129,7 +140,43 @@ const PartnerForm = () => {
     if (!formData.maritalStatus) {
       newErrors.maritalStatus = 'Marital status is required';
     }
-
+    
+        // Medical history validations
+        if (!formData.hasHypertension) {
+            newErrors.hasHypertension = 'Please select yes or no';
+          }
+          if (formData.hasHypertension === 'Yes' && !formData.hypertensionYears) {
+            newErrors.hypertensionYears = 'Please specify the number of years';
+          }
+      
+          if (!formData.hasDiabetes) {
+            newErrors.hasDiabetes = 'Please select yes or no';
+          }
+          if (formData.hasDiabetes === 'Yes' && !formData.diabetesYears) {
+            newErrors.diabetesYears = 'Please specify the number of years';
+          }
+      
+          if (!formData.hasHeartDisease) {
+            newErrors.hasHeartDisease = 'Please select yes or no';
+          }
+          if (formData.hasHeartDisease === 'Yes' && !formData.heartDiseaseYears) {
+            newErrors.heartDiseaseYears = 'Please specify the number of years';
+          }
+      
+          if (!formData.hasCancer) {
+            newErrors.hasCancer = 'Please select yes or no';
+          }
+          if (formData.hasCancer === 'Yes' && !formData.cancerYears) {
+            newErrors.cancerYears = 'Please specify the number of years';
+          }
+      
+          if (!formData.hasKidneyDisease) {
+            newErrors.hasKidneyDisease = 'Please select yes or no';
+          }
+          if (formData.hasKidneyDisease === 'Yes' && !formData.kidneyDiseaseYears) {
+            newErrors.kidneyDiseaseYears = 'Please specify the number of years';
+          }
+  
     setErrors(newErrors);
     setIsFormValid(Object.keys(newErrors).length === 0);
   };
@@ -152,6 +199,12 @@ const PartnerForm = () => {
       // Calculate end date if start date changes
       if (name === 'policyStartDate') {
         newData.policyEndDate = getEndDate(value);
+      }
+
+       // Reset years if condition is set to No
+       if (name.startsWith('has') && value === 'No') {
+        const yearsField = name.replace('has', '').toLowerCase() + 'Years';
+        newData[yearsField] = '';
       }
       
       return newData;
@@ -186,6 +239,61 @@ const PartnerForm = () => {
       {children}<span className="text-red-500 ml-1">*</span>
     </span>
   );
+
+ // Medical History Field Component
+ const MedicalConditionField = ({ condition, years, conditionLabel }) => {
+    const hasCondition = `has${condition}`;
+    const conditionYears = `${condition.toLowerCase()}Years`;
+    
+    return (
+      <div className="space-y-4">
+        <div>
+          <RequiredLabel>{`Are you Suffering with ${conditionLabel}?`}</RequiredLabel>
+          <select
+            name={hasCondition}
+            value={formData[hasCondition]}
+            onChange={handleChange}
+            className={`mt-1 w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 ${
+              errors[hasCondition] ? 'border-red-500' : 'border-gray-300'
+            }`}
+          >
+            <option value="">Select</option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+          {errors[hasCondition] && (
+            <div className="text-red-500 text-xs mt-1 flex items-center">
+              <AlertCircle className="w-4 h-4 mr-1" />
+              {errors[hasCondition]}
+            </div>
+          )}
+        </div>
+        
+        {formData[hasCondition] === 'Yes' && (
+          <div>
+            <RequiredLabel>How Many Years?</RequiredLabel>
+            <input
+              type="number"
+              name={conditionYears}
+              value={formData[conditionYears]}
+              onChange={handleChange}
+              min="0"
+              max="99"
+              className={`mt-1 w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 ${
+                errors[conditionYears] ? 'border-red-500' : 'border-gray-300'
+              }`}
+            />
+            {errors[conditionYears] && (
+              <div className="text-red-500 text-xs mt-1 flex items-center">
+                <AlertCircle className="w-4 h-4 mr-1" />
+                {errors[conditionYears]}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
 
 
   return (
@@ -396,6 +504,37 @@ const PartnerForm = () => {
               )}
             </div>
           </div>
+           {/* Medical History Section */}
+           <div className="mt-8 bg-gray-50 p-4 rounded-lg">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">Medical History</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <MedicalConditionField 
+                  condition="Hypertension"
+                  years="hypertensionYears"
+                  conditionLabel="Hypertension"
+                />
+                <MedicalConditionField 
+                  condition="Diabetes"
+                  years="diabetesYears"
+                  conditionLabel="Diabetes"
+                />
+                <MedicalConditionField 
+                  condition="HeartDisease"
+                  years="heartDiseaseYears"
+                  conditionLabel="Heart Disease"
+                />
+                <MedicalConditionField 
+                  condition="Cancer"
+                  years="cancerYears"
+                  conditionLabel="Cancer"
+                />
+                <MedicalConditionField 
+                  condition="KidneyDisease"
+                  years="kidneyDiseaseYears"
+                  conditionLabel="Kidney Disease"
+                />
+              </div>
+            </div>
 
           {/* Premium Information */}
           <div className="mt-8 bg-gray-50 p-4 rounded-lg">
