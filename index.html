@@ -1,15 +1,71 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-C39GS0KGX3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-C39GS0KGX3");
+    </script>
+
+    <!-- Basic Meta Tags -->
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="At Welin, we are committed to redefining wellness through comprehensive healthcare solutions. Our mission is to make quality healthcare accessible to everyone, everywhere." />
+    <meta name="keywords" content="Welin, wellness, healthcare, health solutions, accessible healthcare" />
+    <meta name="author" content="Welin" />
+
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://welin.in/" />
+    <meta property="og:title" content="Welin - Redefining Wellness" />
+    <meta property="og:description" content="At Welin, we are committed to redefining wellness through comprehensive healthcare solutions. Our mission is to make quality healthcare accessible to everyone, everywhere." />
+    <meta property="og:image" content="https://welin.in/logo_new.jpg" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://welin.in/" />
+    <meta name="twitter:title" content="Welin - Redefining Wellness" />
+    <meta name="twitter:description" content="At Welin, we are committed to redefining wellness through comprehensive healthcare solutions. Our mission is to make quality healthcare accessible to everyone, everywhere." />
+    <meta name="twitter:image" content="https://welin.in/logo_new.jpg" />
+
+    <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="/logo_new.jpg" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Welin</title>
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://welin.in/" />
+
+    <!-- Title -->
+    <title>Welin - Redefining Wellness</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
-    
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Welin",
+        "url": "https://welin.in/",
+        "logo": "https://welin.in/logo_new.jpg",
+        "description": "At Welin, we are committed to redefining wellness through comprehensive healthcare solutions. Our mission is to make quality healthcare accessible to everyone, everywhere.",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+91-8169847634",
+          "contactType": "customer service"
+        },
+        "sameAs": [
+          "https://www.facebook.com/welin",
+          "https://www.twitter.com/welin",
+          "https://www.instagram.com/welin"
+        ]
+      }
+    </script>
   </body>
 </html>
