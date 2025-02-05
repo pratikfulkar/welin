@@ -361,7 +361,7 @@ const PartnerForm = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Member Number */}
               <div>
-                <RequiredLabel>AIOCD Member Number</RequiredLabel>
+                <RequiredLabel>Member Number</RequiredLabel>
 
                 <div className="mt-1 relative">
                   <input
