@@ -10,7 +10,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/adduser" element={<AddUser />} />
-          <Route path="/partner/aiocd" element={<PartnerForm />}/>
+          <Route path="/partner" element={<PartnerForm />}/>
         </Routes>
       </div>
     </Router>

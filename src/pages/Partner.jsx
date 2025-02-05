@@ -350,7 +350,7 @@ const PartnerForm = () => {
         <Card className="max-w-4xl mx-auto p-6">
           <div className="mb-8">
             <h1 className="text-2xl font-bold text-center text-[#9f629e]">
-              AIOCD Partner Portal
+              Partner Portal
             </h1>
             <p className="text-center text-gray-600 mt-2">
               Member Registration Form
