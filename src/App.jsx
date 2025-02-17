@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import AddUser from './pages/AddUser';
 import PartnerForm from './pages/Partner';
+// main app
 
 const App = () => {
   return (
