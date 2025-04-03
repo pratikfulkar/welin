@@ -287,7 +287,7 @@ const UserDataForm = () => {
           {/* Personal Details Section (continued) */}
           <section className="space-y-4">
             <h2 className="text-xl font-semibold">
-              Personal Details (continued)
+              Personal Details
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
