@@ -28,7 +28,9 @@ const PartnerLogin = () => {
       const response = await authAPI.login(formData);
       
       if (response.data.token) {
-        localStorage.setItem('partnerToken', response.data.token);
+        localStorage.setItem('partnerToken', response.data?.token || '' );
+        localStorage.setItem('vendorId', response.data?.vendor?._id || '');
+        localStorage.setItem('userId', response.data?.user?._id || '');
         navigate('/partner');
       }
     } catch (err) {

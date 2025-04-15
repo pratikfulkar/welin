@@ -251,7 +251,9 @@ const PartnerForm = () => {
     setSubmitError('');
 
     try {
-      const response = await partnerAPI.submitPartnerForm(formData);
+      const vendorId = localStorage.getItem('vendorId');
+      const userId = localStorage.getItem('userId');
+      const response = await partnerAPI.submitPartnerForm({ ...formData, vendorId, userId });
       if (response.success) {
         setShowSuccess(true);
       }
