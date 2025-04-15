@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Calendar,
   UserRound,
   BadgeIndianRupee,
   AlertCircle,
   CheckCircle,
+  LogOut,
 } from "lucide-react";
 import logo from "../assets/logo_new.jpg";
+import { authAPI } from '../api/auth';
+import { partnerAPI } from '../api/partner';
 
 const Card = ({ children, className = "" }) => (
   <div className={`bg-white rounded-lg shadow-lg ${className}`}>{children}</div>
@@ -93,6 +97,7 @@ const getMaxDOB = () => {
 };
 
 const PartnerForm = () => {
+  const navigate = useNavigate();
   const initialState = {
     memberNumber: "",
     dob: "",
@@ -127,6 +132,8 @@ const PartnerForm = () => {
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   // Validation functions
   const validateForm = () => {
@@ -236,10 +243,22 @@ const PartnerForm = () => {
     validateForm();
   }, [formData]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (isFormValid) {
-      setShowSuccess(true);
+    if (!isFormValid) return;
+
+    setIsSubmitting(true);
+    setSubmitError('');
+
+    try {
+      const response = await partnerAPI.submitPartnerForm(formData);
+      if (response.success) {
+        setShowSuccess(true);
+      }
+    } catch (error) {
+      setSubmitError(error.message || 'Failed to submit form. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
   const handleReset = () => {
@@ -329,6 +348,11 @@ const PartnerForm = () => {
     );
   };
 
+  const handleLogout = () => {
+    authAPI.logout();
+    navigate('/partner/login');
+  };
+
   return (
     <>
       <header className="fixed w-full bg-white shadow-md z-50">
@@ -342,6 +366,13 @@ const PartnerForm = () => {
               />
               <span className="text-2xl font-bold text-[#77DC4E]">Welin</span>
             </div>
+            <button
+              onClick={handleLogout}
+              className="flex items-center space-x-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+            >
+              <LogOut className="w-5 h-5" />
+              <span>Logout</span>
+            </button>
           </div>
         </div>
       </header>
@@ -356,6 +387,12 @@ const PartnerForm = () => {
               Member Registration Form
             </p>
           </div>
+
+          {submitError && (
+            <div className="mb-6 bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded relative" role="alert">
+              <span className="block sm:inline">{submitError}</span>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -681,32 +718,19 @@ const PartnerForm = () => {
 
             {/* Form Actions */}
             <div className="flex justify-end space-x-4 mt-8">
-              <button
+              <Button
                 type="button"
                 onClick={handleReset}
-                className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
+                className="bg-gray-500"
               >
                 Reset
-              </button>
-              {/* <button
-              type="submit"
-              disabled={!isFormValid}
-              className={`px-6 py-2 rounded-md text-white ${
-                isFormValid 
-                  ? 'bg-blue-600 hover:bg-blue-700' 
-                  : 'bg-gray-400 cursor-not-allowed'
-              }`}
-            >
-              Submit
-            </button> */}
-
+              </Button>
               <Button
                 type="submit"
-                className="bg-[#77DC4E] px-8"
-                disabled={!isFormValid}
-                onClick={handleSubmit}
+                disabled={!isFormValid || isSubmitting}
+                className="bg-[#77DC4E]"
               >
-                Submit
+                {isSubmitting ? 'Submitting...' : 'Submit'}
               </Button>
             </div>
           </form>
