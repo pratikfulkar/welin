@@ -27,8 +27,8 @@ const PartnerLogin = () => {
     try {
       const response = await authAPI.login(formData);
       
-      if (response.token) {
-        localStorage.setItem('partnerToken', response.token);
+      if (response.data.token) {
+        localStorage.setItem('partnerToken', response.data.token);
         navigate('/partner');
       }
     } catch (err) {
